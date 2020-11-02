@@ -50,7 +50,7 @@ class Bank:
             else:
                 return 3
 
-    # create_account returns:
+    # delete_account returns:
     # 5 -> If the account is not found
     # 3 -> If a database error has occurred
     # 1 -> If the account is deleted
@@ -76,6 +76,21 @@ class Bank:
 
     def get_money(self, account, shift):
         pass
+
+    # get_account returns:
+    # '5' -> If the account_no is not found
+    # account_info -> If the account exists
+    def get_account(self, account_no, shift):
+        account_no = caesar_cypher.process_text(account_no, shift, 'DECRYPT')
+        if account_no in self.accounts:
+            # Encrypt the dictionary values
+            account_info = self.accounts[account_no].get_info()
+            for property in account_info:
+                account_info[property] = caesar_cypher.process_text(account_info[property], shift, 'ENCRYPT')
+
+            return account_info
+        else:
+            return '5'
 
     def __process_text(self, msg, shift):
         pass

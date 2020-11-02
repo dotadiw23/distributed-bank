@@ -9,7 +9,7 @@ def create_account(account_no, account_owner, starting_amount, central_bank):
         messagebox.showwarning(message='Please complete the form', title='Incomplete form')
     else:
         # Encrypt the request data
-        shift = randint(1, 65)
+        shift = randint(1, 67)
         account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
         account_owner = caesar_cypher.process_text(account_owner, shift, 'ENCRYPT')
         starting_amount = caesar_cypher.process_text(starting_amount, shift, 'ENCRYPT')

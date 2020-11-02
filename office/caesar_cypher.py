@@ -1,4 +1,4 @@
-ABC = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890. '
+ABC = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890.:- '
 
 
 def process_text(text, shift, action):

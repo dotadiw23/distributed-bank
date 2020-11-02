@@ -1,8 +1,8 @@
 class Account:
 
-    def __init__(self, account_no, mount, owner, password, created_at):
+    def __init__(self, account_no, amount, owner, password, created_at):
         self.account_no = account_no
-        self.mount = mount
+        self.amount = amount
         self.owner = owner
         self.password = password
         self.created_at = created_at
@@ -14,7 +14,7 @@ class Account:
         return self.account_no
 
     def set_mount(self, mount):
-        self.mount = mount
+        self.amount = mount
 
     def get_owner(self):
         return self.owner
@@ -27,3 +27,11 @@ class Account:
 
     def get_created_at(self):
         return self.created_at
+
+    def get_info(self):
+        return {
+            'account_no': self.account_no,
+            'amount': self.amount,
+            'owner': self.owner,
+            'created_at': self.created_at
+        }

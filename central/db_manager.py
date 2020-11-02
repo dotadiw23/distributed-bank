@@ -21,7 +21,7 @@ def get_accounts():
     accounts = {}
 
     for row in rows:
-        accounts[str(row[0])] = Account(row[0], row[1], row[2], '', row[3])
+        accounts[str(row[0])] = Account(row[0], row[1], row[2], '', row[4])
 
     if conn:
         conn.close()
@@ -60,7 +60,7 @@ def create_account(account, amount, owner):
     created_at = datetime.now()
     params = (account, amount, owner, created_at)
     try:
-        cursor.execute('INSERT INTO accounts (account_no, mount, owner, created_at) VALUES (?, ?, ?, ?)', params)
+        cursor.execute('INSERT INTO accounts (account_no, amount, owner, created_at) VALUES (?, ?, ?, ?)', params)
         conn.commit()
 
         if conn:

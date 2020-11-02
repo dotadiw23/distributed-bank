@@ -65,7 +65,7 @@ def login(username, password, root):
 
         consing_money.set_frame(root)
         withdraw_money.set_frame(root)
-        account_info.set_frame(root)
+        account_info.set_frame(root, central_bank)
 
         root.mainloop()
     else:

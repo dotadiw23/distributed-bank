@@ -1,9 +1,9 @@
-ABC = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890. '
+ABC = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890.:- '
 
 
 def process_text(text, shift, action):
     encrypted_text = ''
-    for char in text:
+    for char in str(text):
 
         if action == 'ENCRYPT':
             new_shift = ABC.index(char) + shift

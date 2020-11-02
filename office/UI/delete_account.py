@@ -8,7 +8,7 @@ def delete_account(account_no, central_bank):
     if account_no != '':
         if messagebox.askyesno(message=f'Are you sure to delete account: {account_no}', title='Continue?'):
             # Encrypt the account number
-            shift = randint(0, 65)
+            shift = randint(0, 67)
             account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
             status = central_bank.delete_account(account_no, shift)
 
