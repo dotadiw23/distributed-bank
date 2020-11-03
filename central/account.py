@@ -10,10 +10,10 @@ class Account:
     def get_account_no(self):
         return self.account_no
 
-    def get_mount(self):
-        return self.account_no
+    def get_amount(self):
+        return self.amount
 
-    def set_mount(self, mount):
+    def set_amount(self, mount):
         self.amount = mount
 
     def get_owner(self):

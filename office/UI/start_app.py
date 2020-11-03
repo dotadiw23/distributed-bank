@@ -61,10 +61,10 @@ def login(username, password, root):
         if user.get_permissions() == '2':
             create_account.set_frame(root, central_bank)
             delete_account.set_frame(root, central_bank)
-            update_account.set_frame(root)
+            update_account.set_frame(root, central_bank)
 
-        consing_money.set_frame(root)
-        withdraw_money.set_frame(root)
+        consing_money.set_frame(root, central_bank)
+        withdraw_money.set_frame(root, central_bank)
         account_info.set_frame(root, central_bank)
 
         root.mainloop()

@@ -65,17 +65,58 @@ class Bank:
         else:
             return 5
 
+    # update_account returns:
+    # 5 -> If the account is not found
+    # 3 -> If a database error has occurred
+    # 1 -> If account owner is changed
     def update_account(self, account, new_owner, shift):
-        pass
+        account = caesar_cypher.process_text(account, shift, 'DECRYPT')
+        if account in self.accounts:
+            new_owner = caesar_cypher.process_text(new_owner, shift, 'DECRYPT')
+            if db.update_account(account, new_owner):
+                self.accounts[account].set_owner(new_owner)
+                return 1
+            else:
+                return 3
+        else:
+            return 5
 
+    # add_money returns:
+    # 5 -> If the account is not found
+    # 3 -> If a database error has occurred
+    # 1 -> If the transaction is successful
     def add_money(self, account, amount, shift):
-        pass
+        account = caesar_cypher.process_text(account, shift, 'DECRYPT')
+        if account in self.accounts:
+            amount = caesar_cypher.process_text(amount, shift, 'DECRYPT')
+            new_amount = int(self.accounts[account].get_amount()) + int(amount)
 
-    def withdraw_money(self, account, shift):
-        pass
+            if db.update_amount(account, new_amount):
+                self.accounts[account].set_amount(new_amount)
+                return 1
+            else :
+                return 3
+        else:
+            return 5
 
-    def get_money(self, account, shift):
-        pass
+    # withdraw_money returns:
+    # 5 -> If the account is not found
+    # 3 -> If a database error has occurred
+    # 1 -> If the transaction is successful
+    def withdraw_money(self, account, amount, shift):
+        account = caesar_cypher.process_text(account, shift, 'DECRYPT')
+        if account in self.accounts:
+            amount = caesar_cypher.process_text(amount, shift, 'DECRYPT')
+            new_amount = int(self.accounts[account].get_amount()) - int(amount)
+
+            if db.update_amount(account, new_amount):
+                self.accounts[account].set_amount(new_amount)
+                return 1
+            else :
+                return 3
+        else:
+            return 5
+
 
     # get_account returns:
     # '5' -> If the account_no is not found
@@ -85,8 +126,8 @@ class Bank:
         if account_no in self.accounts:
             # Encrypt the dictionary values
             account_info = self.accounts[account_no].get_info()
-            for property in account_info:
-                account_info[property] = caesar_cypher.process_text(account_info[property], shift, 'ENCRYPT')
+            for info in account_info:
+                account_info[info] = caesar_cypher.process_text(account_info[info], shift, 'ENCRYPT')
 
             return account_info
         else:

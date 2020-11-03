@@ -87,3 +87,37 @@ def delete_account(account):
         return True
     except Error:
         return False
+
+
+def update_account(account, new_owner):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (new_owner, account)
+
+    try:
+        cursor.execute('UPDATE accounts SET owner = ? WHERE account_no = ?', params)
+        conn.commit()
+
+        if conn:
+            conn.close()
+
+        return True
+    except Error:
+        return False
+
+
+def update_amount(account, amount):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (amount, account)
+
+    try:
+        cursor.execute('UPDATE accounts SET amount = ? WHERE account_no = ?', params)
+        conn.commit()
+
+        if conn:
+            conn.close()
+
+        return True
+    except Error:
+        return False
