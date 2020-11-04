@@ -40,11 +40,12 @@ def login(username, password, root):
     if len(credentials) > 0:
 
         global user
+        global central_bank
 
-        if credentials[3] == '2':
-            user = employees.Manager(credentials[0], credentials[1], credentials[2], credentials[3])
-        elif credentials[3] == '1':
-            user = employees.Cashier(credentials[0], credentials[1], credentials[2], credentials[3])
+        if credentials[2] == '2':
+            user = employees.Manager(credentials[0], credentials[1], credentials[2], central_bank)
+        elif credentials[2] == '1':
+            user = employees.Employee(credentials[0], credentials[1], credentials[2], central_bank)
 
         root.destroy()
 
@@ -56,16 +57,14 @@ def login(username, password, root):
         root.config(borderwidth=5)
         root.resizable(0, 0)
 
-        global central_bank
-
         if user.get_permissions() == '2':
-            create_account.set_frame(root, central_bank)
-            delete_account.set_frame(root, central_bank)
-            update_account.set_frame(root, central_bank)
+            create_account.set_frame(root, user)
+            delete_account.set_frame(root, user)
+            update_account.set_frame(root, user)
 
-        consing_money.set_frame(root, central_bank)
-        withdraw_money.set_frame(root, central_bank)
-        account_info.set_frame(root, central_bank)
+        consing_money.set_frame(root, user)
+        withdraw_money.set_frame(root, user)
+        account_info.set_frame(root, user)
 
         root.mainloop()
     else:

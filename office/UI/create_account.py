@@ -1,20 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
-from office import caesar_cypher
-from random import randint
 
 
-def create_account(account_no, account_owner, starting_amount, central_bank):
+def create_account(account_no, account_owner, starting_amount, user):
     if account_no == '' or account_owner == '' or starting_amount == '':
         messagebox.showwarning(message='Please complete the form', title='Incomplete form')
     else:
-        # Encrypt the request data
-        shift = randint(1, 67)
-        account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
-        account_owner = caesar_cypher.process_text(account_owner, shift, 'ENCRYPT')
-        starting_amount = caesar_cypher.process_text(starting_amount, shift, 'ENCRYPT')
-
-        status = central_bank.create_account(account_no, account_owner, starting_amount, shift)
+        status = user.show_account(account_no, account_owner, starting_amount)
 
         if status == 5:
             messagebox.showwarning(message='Account already exists', title='Creation error')
@@ -24,7 +16,7 @@ def create_account(account_no, account_owner, starting_amount, central_bank):
             messagebox.showinfo(message='Account created successfully', title='Ok')
 
 
-def set_frame(root, central_bank):
+def set_frame(root, user):
     create_frame = tk.Frame(root)
     create_frame.config(borderwidth=5, highlightbackground='black', highlightthickness=1)
     create_frame.grid(row=0, column=0, sticky='n', padx=2, pady=2)
@@ -45,6 +37,8 @@ def set_frame(root, central_bank):
     starting_amount = tk.Entry(create_frame)
     starting_amount.grid(row=3, column=1)
 
-    create_btn = tk.Button(create_frame, text='Create account', command=lambda: create_account(account_no.get(), account_owner.get(), starting_amount.get(), central_bank))
+    create_btn = tk.Button(create_frame, text='Create account',
+                           command=lambda: create_account(account_no.get(), account_owner.get(), starting_amount.get(),
+                                                          user))
     create_btn.config(bg='green')
     create_btn.grid(row=4, column=1, sticky='w', pady=5)

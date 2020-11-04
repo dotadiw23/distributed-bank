@@ -46,7 +46,6 @@ def search_user(username, password):
         user.append(row[1])
         user.append(row[2])
         user.append(row[3])
-        user.append(row[4])
 
     if conn:
         conn.close()

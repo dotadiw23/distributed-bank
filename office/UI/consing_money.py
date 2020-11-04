@@ -1,18 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
-from office import caesar_cypher
-from random import randint
 
 
-def consign_money(account_no, amount, central_bank):
+def consign_money(account_no, amount, user):
     if account_no == '' or amount == '':
         messagebox.showwarning(message='Please complete the form', title='Incomplete form')
     else:
-        shift = randint(0, 67)
-        account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
-        amount = caesar_cypher.process_text(amount, shift, 'ENCRYPT')
-
-        status = central_bank.add_money(account_no, amount, shift)
+        status = user.consign_money(account_no, amount)
 
         if status == 5:
             messagebox.showwarning(message='Account does not exists', title='Missing account')
@@ -22,7 +16,7 @@ def consign_money(account_no, amount, central_bank):
             messagebox.showinfo(message='Successful transaction', title='Ok')
 
 
-def set_frame(root, central_bank):
+def set_frame(root, user):
     consignment_frame = tk.Frame(root)
     consignment_frame.config(borderwidth=5, highlightbackground='black', highlightthickness=1)
     consignment_frame.grid(row=0, column=1, sticky='n', padx=2, pady=2)
@@ -40,6 +34,6 @@ def set_frame(root, central_bank):
     amount.grid(row=2, column=1)
 
     consign_btn = tk.Button(consignment_frame, text='Consign money',
-                            command=lambda: consign_money(account_no.get(), amount.get(), central_bank))
+                            command=lambda: consign_money(account_no.get(), amount.get(), user))
     consign_btn.config(bg='#115e76')
     consign_btn.grid(row=4, column=1, sticky='w', pady=5)

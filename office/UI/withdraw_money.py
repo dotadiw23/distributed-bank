@@ -1,16 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
-from office import caesar_cypher
-from random import randint
 
-def withdraw_money(account_no, amount, central_bank):
+
+def withdraw_money(account_no, amount, user):
     if account_no == '' or amount == '':
         messagebox.showwarning(message='Please complete the form', title='Incomplete form')
     else:
-        shift = randint(1, 67)
-        account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
-        amount = caesar_cypher.process_text(amount, shift, 'ENCRYPT')
-        status = central_bank.withdraw_money(account_no, amount, shift)
+        status = user.withdraw_money(account_no, amount)
 
         if status == 5:
             messagebox.showwarning(message='Account does not exists', title='Missing account')
@@ -19,7 +15,8 @@ def withdraw_money(account_no, amount, central_bank):
         elif status == 1:
             messagebox.showinfo(message='Successful transaction', title='Ok')
 
-def set_frame(root, central_bank):
+
+def set_frame(root, user):
     consignment_frame = tk.Frame(root)
     consignment_frame.config(borderwidth=5, highlightbackground='black', highlightthickness=1)
     consignment_frame.grid(row=1, column=1, sticky='n', padx=2, pady=2)
@@ -27,7 +24,7 @@ def set_frame(root, central_bank):
     # Frame title
     tk.Label(consignment_frame, text='Withdraw money').grid(row=0, column=0, sticky='w', padx=5, pady=5)
 
-    # Create account form
+    # Withdraw account form
     tk.Label(consignment_frame, text='Account number').grid(row=1, column=0, sticky='w', padx=5, pady=5)
     account_no = tk.Entry(consignment_frame)
     account_no.grid(row=1, column=1)
@@ -36,7 +33,7 @@ def set_frame(root, central_bank):
     amount = tk.Entry(consignment_frame)
     amount.grid(row=2, column=1)
 
-    consign_btn = tk.Button(consignment_frame, text='Withdraw money',
-                            command=lambda: withdraw_money(account_no.get(), amount.get(), central_bank))
-    consign_btn.config(bg='#115e76')
-    consign_btn.grid(row=4, column=1, sticky='w', pady=5)
+    withdraw_btn = tk.Button(consignment_frame, text='Withdraw money',
+                             command=lambda: withdraw_money(account_no.get(), amount.get(), user))
+    withdraw_btn.config(bg='#115e76')
+    withdraw_btn.grid(row=4, column=1, sticky='w', pady=5)

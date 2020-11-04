@@ -94,7 +94,7 @@ class Bank:
             if db.update_amount(account, new_amount):
                 self.accounts[account].set_amount(new_amount)
                 return 1
-            else :
+            else:
                 return 3
         else:
             return 5
@@ -112,11 +112,10 @@ class Bank:
             if db.update_amount(account, new_amount):
                 self.accounts[account].set_amount(new_amount)
                 return 1
-            else :
+            else:
                 return 3
         else:
             return 5
-
 
     # get_account returns:
     # '5' -> If the account_no is not found
@@ -126,8 +125,8 @@ class Bank:
         if account_no in self.accounts:
             # Encrypt the dictionary values
             account_info = self.accounts[account_no].get_info()
-            for info in account_info:
-                account_info[info] = caesar_cypher.process_text(account_info[info], shift, 'ENCRYPT')
+            for data in account_info:
+                account_info[data] = caesar_cypher.process_text(account_info[data], shift, 'ENCRYPT')
 
             return account_info
         else:
