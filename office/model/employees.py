@@ -60,14 +60,14 @@ class Manager(Employee):
         account_owner = caesar_cypher.process_text(account_owner, shift, 'ENCRYPT')
         starting_amount = caesar_cypher.process_text(starting_amount, shift, 'ENCRYPT')
 
-        return self._central_bank.show_account(account_no, account_owner, starting_amount, shift)
+        return self._central_bank.create_account(account_no, account_owner, starting_amount, shift)
 
     def delete_account(self, account_no):
         # Encrypt the request data
         shift = randint(1, 67)
         account_no = caesar_cypher.process_text(account_no, shift, 'ENCRYPT')
 
-        return self._central_bank.update_account(account_no, shift)
+        return self._central_bank.delete_account(account_no, shift)
 
     def update_account(self, account_no, new_owner):
         # Encrypt the request data

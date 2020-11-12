@@ -6,7 +6,7 @@ def create_account(account_no, account_owner, starting_amount, user):
     if account_no == '' or account_owner == '' or starting_amount == '':
         messagebox.showwarning(message='Please complete the form', title='Incomplete form')
     else:
-        status = user.show_account(account_no, account_owner, starting_amount)
+        status = user.create_account(account_no, account_owner, starting_amount)
 
         if status == 5:
             messagebox.showwarning(message='Account already exists', title='Creation error')

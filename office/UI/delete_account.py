@@ -5,7 +5,7 @@ from tkinter import messagebox
 def delete_account(account_no, user):
     if account_no != '':
         if messagebox.askyesno(message=f'Are you sure to delete account: {account_no}', title='Continue?'):
-            status = user.update_account(account_no)
+            status = user.delete_account(account_no)
 
             if status == 5:
                 messagebox.showwarning(message='Account is not found', title='Not found')
