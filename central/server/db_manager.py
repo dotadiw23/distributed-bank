@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Error
-from central.account import Account
+from central.server.account import Account
 from datetime import datetime
 
 
@@ -9,7 +9,7 @@ def connect():
         conn = sqlite3.connect('./database/bank.db')
         return conn
     except Error:
-        print(Error)
+        print(Error.__annotations__)
 
 
 def get_accounts():

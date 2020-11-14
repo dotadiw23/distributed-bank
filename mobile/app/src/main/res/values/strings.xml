@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MobileBanking</string>
+    <string name="login">"Login"</string>
+    <string name="account_no">"Account Number"</string>
+    <string name="password">"Password"</string>
+    <string name="empty_fields">Empty Fields</string>
+    <string name="no_account">Please chek your account number or password</string>
+</resources>

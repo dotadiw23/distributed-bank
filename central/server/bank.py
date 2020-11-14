@@ -1,7 +1,6 @@
 import Pyro4
-from central import db_manager as db
-from central import caesar_cypher
-from central.account import Account
+from central.server import db_manager as db, caesar_cypher
+from central.server.account import Account
 
 
 # This class models the bank data
