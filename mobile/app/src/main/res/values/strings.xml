@@ -5,4 +5,11 @@
     <string name="password">"Password"</string>
     <string name="empty_fields">Empty Fields</string>
     <string name="no_account">Please chek your account number or password</string>
+    <string name="account">Account</string>
+    <string name="menu_transfer">Transfers</string>
+    <string name="transaction_history">History</string>
+    <string name="no_conection">Can\'t connect with the server</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="amount">Amount</string>
 </resources>

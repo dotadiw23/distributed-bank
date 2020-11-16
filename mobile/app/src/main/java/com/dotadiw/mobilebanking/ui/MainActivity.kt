@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             val retrofit = restEngine() // Instance retrofit
 
             val apiService: BankService = retrofit.create(BankService::class.java)
-            val res: Call<String> = apiService.getAccount(Credentials(accountNo, password))
+            val res: Call<String> = apiService.login(Credentials(accountNo, password))
 
             res.enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -51,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
                     if (accessToken == "Account not found") Toast.makeText(
                         this@MainActivity, R.string.no_account, Toast.LENGTH_SHORT
+                    ).show()
+                    else if (accessToken == "Invalid request") Toast.makeText(
+                        this@MainActivity, R.string.no_conection, Toast.LENGTH_SHORT
                     ).show()
                     else {
                         // Start a new activity and send the access token

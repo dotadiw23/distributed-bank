@@ -1,10 +1,10 @@
 package com.dotadiw.mobilebanking.bankapi
 
 
+import com.dotadiw.mobilebanking.entities.Account
 import com.dotadiw.mobilebanking.entities.Credentials
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /*
  * Interface for the communication with the REST API
@@ -16,6 +16,9 @@ interface BankService {
      * if the request is ok, the server returns the access token
      */
     @POST("login")
-    fun getAccount(@Body credentials: Credentials): Call<String>
+    fun login(@Body credentials: Credentials): Call<String>
+
+    @GET("account/{token}")
+    fun getAccount(@Path("token") token: String): Call<Account>
 
 }

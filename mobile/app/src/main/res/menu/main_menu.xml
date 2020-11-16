@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/account"
+        android:title="@string/account"
+        android:icon="@mipmap/account_foreground"/>
+
+    <item android:id="@+id/money_transfer"
+        android:title="@string/menu_transfer"
+        android:icon="@mipmap/money_transfer_foreground"/>
+
+    <item android:id="@+id/transaction_history"
+        android:title="@string/transaction_history"
+        android:icon="@mipmap/transaction_history_foreground"/>
+</menu>
