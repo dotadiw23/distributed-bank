@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.dotadiw.mobilebanking.R
 import com.dotadiw.mobilebanking.bankapi.BankService
-import com.dotadiw.mobilebanking.entities.Credentials
+import com.dotadiw.mobilebanking.model.Credentials
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val HOST = "192.168.0.3"
+    private val HOST = "192.168.0.8"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                         this@MainActivity, R.string.no_account, Toast.LENGTH_SHORT
                     ).show()
                     else if (accessToken == "Invalid request") Toast.makeText(
-                        this@MainActivity, R.string.no_conection, Toast.LENGTH_SHORT
+                        this@MainActivity, R.string.no_connection, Toast.LENGTH_SHORT
                     ).show()
                     else {
                         // Start a new activity and send the access token

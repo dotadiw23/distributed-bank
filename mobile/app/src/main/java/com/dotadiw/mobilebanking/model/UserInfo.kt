@@ -1,4 +1,4 @@
-package com.dotadiw.mobilebanking.entities
+package com.dotadiw.mobilebanking.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -20,4 +20,14 @@ data class Credentials (
     @SerializedName("account_no")
     val accountNo: String,
     val password: String
+)
+
+data class Transaction(
+    @SerializedName("transaction_id")
+    val transactionId: Int,
+    val origin: String,
+    val destination: String,
+    val amount: Float,
+    @SerializedName("transaction_date")
+    val transactionDate: String
 )

@@ -47,3 +47,31 @@ def get_account(account_no):
         conn.close()
 
     return user
+
+
+def get_transactions(account_no):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (account_no, account_no)
+    cursor.execute('SELECT * FROM transactions WHERE origin = ? OR destination = ?', params)
+
+    rows = cursor.fetchall()
+    transactions = []
+
+    for row in rows:
+        transactions.append({
+            'transaction_id': row[0],
+            'origin': row[1],
+            'destination': row[2],
+            'amount': row[3],
+            'transaction_date': row[4]
+        })
+
+    if conn:
+        conn.close()
+
+    return transactions
+
+
+def make_transaction(account_no, destination, amount):
+    return None
