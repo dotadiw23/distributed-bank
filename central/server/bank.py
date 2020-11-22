@@ -7,9 +7,8 @@ from central.server.account import Account
 @Pyro4.expose
 class Bank:
 
-    def __init__(self, accounts, offices):
+    def __init__(self, accounts):
         self.accounts = accounts
-        self.offices = offices
 
     @staticmethod
     def search_user(username, password, shift):
@@ -131,6 +130,17 @@ class Bank:
         else:
             return '5'
 
+    def update_account_state(self, account1, account2):
+        print(self.accounts[account1].get_info())
+        print(self.accounts[account2].get_info())
+
+        self.accounts[account1] = db.get_account(account1)
+        self.accounts[account2] = db.get_account(account2)
+
+        print("New data")
+        print(self.accounts[account1].get_info())
+        print(self.accounts[account2].get_info())
+
     def __process_text(self, msg, shift):
         pass
 
@@ -139,7 +149,7 @@ class Bank:
 def main():
     daemon = Pyro4.Daemon()
 
-    uri = daemon.register(Bank(db.get_accounts(), db.get_offices()))
+    uri = daemon.register(Bank(db.get_accounts()))
     name_server = Pyro4.locateNS()
     name_server.register('central_bank', uri)
 

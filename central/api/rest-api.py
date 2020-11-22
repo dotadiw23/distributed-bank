@@ -3,18 +3,16 @@ from central.api import db_manager as db
 import jwt
 import os
 from dotenv import load_dotenv
+from central.api import pyro_manager
 
 app = Flask(__name__)
 
 
 # Test
-@app.route('/ping/<string:token>')
-def pong(token):
-    try:
-        decoded = jwt.decode(token, os.getenv('TOKEN_SECRET'), algorithm='HS256')
-        return jsonify(decoded)
-    except:
-        return jsonify('Invalid Token')
+@app.route('/ping')
+def pong():
+    pyro_manager.update_account_state("1234", "8888")
+    return jsonify('pong')
 
 
 # Gives to the user a token if the sent credentials are valid
@@ -90,6 +88,8 @@ def make_transactions(user_token):
             if account_amount > amount:
                 if destination_exists:
                     transaction_status = db.make_transaction(decoded_token['_id'], destination, amount)
+
+                    pyro_manager.update_account_state(decoded_token['_id'], destination)
 
                     return jsonify(transaction_status)
                 else:

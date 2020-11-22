@@ -29,8 +29,22 @@ def get_accounts():
     return accounts
 
 
-def get_offices():
-    return ['']
+def get_account(account_no):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (account_no, )
+    cursor.execute('SELECT * FROM accounts WHERE account_no = ?', params)
+
+    rows = cursor.fetchall()
+    account = object
+
+    for row in rows:
+        account = Account(row[0], row[1], row[2], row[3], row[4])
+
+    if conn:
+        conn.close()
+
+    return account
 
 
 def search_user(username, password):
