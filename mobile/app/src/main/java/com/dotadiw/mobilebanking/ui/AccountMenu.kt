@@ -2,14 +2,18 @@ package com.dotadiw.mobilebanking.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.dotadiw.mobilebanking.R
 import com.dotadiw.mobilebanking.bankapi.BankService
+import com.dotadiw.mobilebanking.interfaces.OnDataPass
 import com.dotadiw.mobilebanking.model.Account
 import com.dotadiw.mobilebanking.model.Transaction
+import com.dotadiw.mobilebanking.model.TransferData
 import com.dotadiw.mobilebanking.ui.fragments.AccountFragment
 import com.dotadiw.mobilebanking.ui.fragments.TransactionsFragment
+import com.dotadiw.mobilebanking.ui.fragments.TransferFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AccountMenu : AppCompatActivity() {
+class AccountMenu : AppCompatActivity(), OnDataPass {
 
     private lateinit var accessToken: String
     private val bundle = Bundle()
@@ -37,12 +41,42 @@ class AccountMenu : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.account -> getAccountInfo(accessToken)
-                //R.id.money_transfer -> showFragment(TransferFragment(), )
+                R.id.money_transfer -> showFragment(TransferFragment())
                 R.id.transaction_history -> getTransactionHistory(accessToken)
             }
 
             true
         }
+    }
+
+    /*
+     * Interface to pass data between the fragment transfer form
+     * and the container activity
+     */
+    override fun onDataPass(data: Array<String>) {
+        val retrofit = restEngine()
+
+        val apiService: BankService = retrofit.create(BankService::class.java)
+        val res: Call<Int> = apiService.makeTransfer(accessToken, TransferData(data[0], data[1].toFloat()))
+
+        res.enqueue(object : Callback<Int> {
+
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+
+                when (response.body()) {
+                    5 -> Toast.makeText(this@AccountMenu, R.string.no_money, Toast.LENGTH_SHORT).show()
+                    4 -> Toast.makeText(this@AccountMenu, R.string.no_destination, Toast.LENGTH_SHORT).show()
+                    3 -> Toast.makeText(this@AccountMenu, R.string.database_err, Toast.LENGTH_SHORT).show()
+                    2 -> Toast.makeText(this@AccountMenu, R.string.invalid_request, Toast.LENGTH_SHORT).show()
+                    1 -> Toast.makeText(this@AccountMenu, R.string.transfer_successful, Toast.LENGTH_SHORT).show()
+                }
+                
+            }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                println("Something is wrong!")
+            }
+        })
     }
 
 
@@ -132,4 +166,5 @@ class AccountMenu : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragment_container, fragment).commit()
 
     }
+
 }

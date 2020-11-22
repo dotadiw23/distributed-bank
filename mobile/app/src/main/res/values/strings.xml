@@ -4,7 +4,7 @@
     <string name="account_no">"Account Number"</string>
     <string name="password">"Password"</string>
     <string name="empty_fields">Empty Fields</string>
-    <string name="no_account">Please chek your account number or password</string>
+    <string name="no_account">Please check your account number or password</string>
     <string name="account">Account</string>
     <string name="menu_transfer">Transfers</string>
     <string name="transaction_history">History</string>
@@ -16,4 +16,11 @@
     <string name="transaction_id">"Transaction no: "</string>
     <string name="from">"From: "</string>
     <string name="to">"To: "</string>
+    <string name="destination">Account destination number</string>
+    <string name="make_transfer">Make transfer</string>
+    <string name="no_money">You don\'t have enough money to make the transfer</string>
+    <string name="no_destination">The destination account does not exists</string>
+    <string name="database_err">A database error has occurred</string>
+    <string name="invalid_request">Invalid request</string>
+    <string name="transfer_successful">The transfer is successful</string>
 </resources>

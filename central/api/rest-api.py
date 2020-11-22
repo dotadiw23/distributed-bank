@@ -65,9 +65,11 @@ def get_transactions(user_token):
 
 # make_transaction returns:
 # 5 -> If the account does not have enough money
-# 4 -> If the request is not valid
+# 4 -> The destination account does not exists
 # 3 -> If a database error has occurred
+# 2 -> If the request is not valid
 # 1 -> If the transaction is successful
+# 0 -> The transaction has failed
 @app.route('/transactions/<string:user_token>', methods=['POST'])
 def make_transactions(user_token):
     try:
@@ -77,12 +79,27 @@ def make_transactions(user_token):
 
     try:
         destination = request.json['destination']
-        amount = request.json['amount']
-        transaction_status = db.make_transaction(decoded_token['_id'], destination, amount)
+        if destination == decoded_token['_id']:
+            return jsonify(2)
 
-        return jsonify(transaction_status)
+        amount = request.json['amount']
+        try:
+            account_amount = db.get_amount(decoded_token['_id'])
+            destination_exists = db.exists(destination)
+
+            if account_amount > amount:
+                if destination_exists:
+                    transaction_status = db.make_transaction(decoded_token['_id'], destination, amount)
+
+                    return jsonify(transaction_status)
+                else:
+                    return jsonify(4)
+            else:
+                return jsonify(5)
+        except:
+            return jsonify(3)
     except:
-        return jsonify(4)
+        return jsonify(2)
 
 
 if __name__ == '__main__':

@@ -31,3 +31,8 @@ data class Transaction(
     @SerializedName("transaction_date")
     val transactionDate: String
 )
+
+data class TransferData(
+    val destination: String,
+    val amount: Float
+)

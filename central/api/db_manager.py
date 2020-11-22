@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+from datetime import datetime
 
 
 def connect():
@@ -74,4 +75,59 @@ def get_transactions(account_no):
 
 
 def make_transaction(account_no, destination, amount):
-    return None
+    conn = connect()
+    cursor = conn.cursor()
+    transaction_date = datetime.now().strftime("%Y-%m-%d")
+
+    try:
+        params1 = (account_no, destination, amount, transaction_date,)
+        params2 = ((get_amount(account_no)-amount), account_no, )
+        params3 = ((get_amount(destination) + amount), destination)
+
+        cursor.execute('INSERT INTO transactions (origin, destination, amount, transaction_date) VALUES (?, ?, ?, ?)',
+                       params1)
+        cursor.execute('UPDATE accounts SET amount = ? WHERE account_no = ?', params2)
+        cursor.execute('UPDATE accounts SET amount = ? WHERE account_no = ?', params3)
+
+        conn.commit()
+
+        if conn:
+            conn.close()
+
+        return 1
+    except Error:
+        print(Error)
+        return 0
+
+
+def get_amount(account_no):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (account_no,)
+    cursor.execute("SELECT amount FROM accounts WHERE account_no = ?", params)
+
+    rows = cursor.fetchall()
+    amount = 0
+
+    for row in rows:
+        amount = row[0]
+
+    if conn:
+        conn.close()
+
+    return float(amount)
+
+
+def exists(destination):
+    conn = connect()
+    cursor = conn.cursor()
+    params = (destination,)
+    cursor.execute("SELECT account_no FROM accounts WHERE account_no = ?", params)
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+        return len(row[0]) > 0
+
+    if conn:
+        conn.close()
